@@ -3,3 +3,11 @@
 ################################################################################
 
 /.vs
+PostalovTeam/obj/Debug/PostalovTeam.pdb
+PostalovTeam/obj/Debug/PostalovTeam.csprojAssemblyReference.cache
+PostalovTeam/obj/Debug/PostalovTeam.csproj.FileListAbsolute.txt
+PostalovTeam/obj/Debug/PostalovTeam.csprojAssemblyReference.cache
+*.cache
+*.pdb
+*.dll
+*.pdb
