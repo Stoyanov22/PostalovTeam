@@ -178,6 +178,12 @@
     <Content Include="Views\KangooJump\Index.cshtml" />
     <Content Include="Views\PostArt\Index.cshtml" />
     <Content Include="Views\Store\Index.cshtml" />
+    <Content Include="Views\PostArt\DanceTheater.cshtml" />
+    <Content Include="Views\PostArt\TheaterSchool.cshtml" />
+    <Content Include="Views\PostArt\KidsDanceSchool.cshtml" />
+    <Content Include="Views\PostArt\BulgarianDanceClub.cshtml" />
+    <Content Include="Views\PostArt\KidsVocalSchool.cshtml" />
+    <Content Include="Views\PostArt\Handmade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
