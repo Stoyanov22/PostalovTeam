@@ -1,0 +1,13 @@
+﻿@model PostalovTeam.Models.RegisterModel
+
+<h2>Register</h2>
+
+@Html.ValidationSummary(false)
+
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+    <p>
+        <button type="submit">Register</button>
+    </p>
+}

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace PostalovTeam.Controllers
 {
+    [AllowAnonymous]
     public class AboutController : Controller
     {
         // GET: About

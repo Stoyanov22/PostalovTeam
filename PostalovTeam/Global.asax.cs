@@ -1,4 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using PostalovTeam.Models;
+using SimpleInjector;
+using SimpleInjector.Integration.Web;
+using SimpleInjector.Integration.Web.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +22,16 @@ namespace PostalovTeam
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var container = new SimpleInjector.Container();
+            container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
+            container.Register<PostalovTeamDbContext, PostalovTeamDbContext>(Lifestyle.Scoped);
+            container.Register<IUserStore<AppUser>>(() => new UserStore<AppUser>(container.GetInstance<PostalovTeamDbContext>()), Lifestyle.Scoped);
+            container.Register(() => new UserManager<AppUser>(container.GetInstance<IUserStore<AppUser>>()), Lifestyle.Scoped);
+
+            container.Verify();
+
+            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
         }
     }
 }

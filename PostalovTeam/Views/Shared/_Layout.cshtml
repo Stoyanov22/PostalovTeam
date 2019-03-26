@@ -26,6 +26,15 @@
                     <li>@Html.ActionLink("Fat-Fight", "Index", "FatFight")</li>
                     <li>@Html.ActionLink("Kangoo Jump", "Index", "KangooJump")</li>
                     <li>@Html.ActionLink("Галерия", "Index", "Gallery")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Изход", "LogOut", "Auth")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Логин", "LogIn", "Auth")</li>
+                        <li>@Html.ActionLink("Регистрация", "Register", "Auth")</li>
+                    }
                 </ul>
             </div>
         </div>
