@@ -1,0 +1,16 @@
+﻿@model IEnumerable<PostalovTeam.Models.Product>
+
+<h2>Продукти</h2>
+
+@foreach (var product in Model)
+{
+    <div>
+        <h3>@Html.ActionLink(product.Name, "Product", "Store", new { productId = product.ProductId }, null)</h3>
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Промени", "EditProduct", "Store", new { productId = product.ProductId }, null);
+            @Ajax.ActionLink("Изтрий", "DeleteProduct", "Store", new { productId = product.ProductId }, new AjaxOptions { HttpMethod = "POST" })
+
+        }
+    </div><br />
+}

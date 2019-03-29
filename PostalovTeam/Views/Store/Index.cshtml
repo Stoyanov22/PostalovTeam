@@ -1,7 +1,21 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@model List<PostalovTeam.Models.Category>
+<h2>Категории</h2>
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Добави нова категория", "CreateCategory", "Store");
+    @Html.ActionLink("Добави продукт", "CreateProduct", "Store")
 }
 
-<h2>Index</h2>
+@foreach (var category in Model)
+{
+    <div>
 
+        <h3>@Html.ActionLink(category.Name, "Products", "Store", new { categoryID = category.CategoryId }, null)</h3>
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Промени", "EditCategory", "Store", new { categoryId = category.CategoryId }, null);
+            @Ajax.ActionLink("Изтрий", "DeleteCategory", "Store", new { categoryId = category.CategoryId }, new AjaxOptions { HttpMethod = "POST" })
+
+        }
+    </div><br />
+}

@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PostalovTeamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Products__Catego__2A4B4B5E" FromRole="Categories" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Exercise">
+    <Key>
+      <PropertyRef Name="ExerciseId" />
+    </Key>
+    <Property Name="ExerciseId" Type="Int32" Nullable="false" />
+    <Property Name="Day" Type="Int32" Nullable="false" />
+    <Property Name="StarHour" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EndHour" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="FileId" Type="Int32" />
+    <NavigationProperty Name="File" Relationship="Self.FK__Exercises__FileI__2B3F6F97" FromRole="Exercises" ToRole="Files" />
+  </EntityType>
+  <EntityType Name="File">
+    <Key>
+      <PropertyRef Name="FileId" />
+    </Key>
+    <Property Name="FileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Content" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <NavigationProperty Name="Exercises" Relationship="Self.FK__Exercises__FileI__2B3F6F97" FromRole="Files" ToRole="Exercises" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Products" Relationship="PostalovTeamModel.FK__Products__FileId__4222D4EF" FromRole="File" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="Self.FK__Products__Catego__2A4B4B5E" FromRole="Products" ToRole="Categories" />
+    <Property Name="FileId" Type="Int32" />
+    <NavigationProperty Name="File" Relationship="PostalovTeamModel.FK__Products__FileId__4222D4EF" FromRole="Product" ToRole="File" />
+  </EntityType>
+  <Association Name="FK__Products__Catego__2A4B4B5E">
+    <End Role="Categories" Type="Self.Category" Multiplicity="1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Exercises__FileI__2B3F6F97">
+    <End Role="Files" Type="Self.File" Multiplicity="0..1" />
+    <End Role="Exercises" Type="PostalovTeamModel.Exercise" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Files">
+        <PropertyRef Name="FileId" />
+      </Principal>
+      <Dependent Role="Exercises">
+        <PropertyRef Name="FileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PostalovTeamEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Exercises" EntityType="PostalovTeamModel.Exercise" />
+    <EntitySet Name="Files" EntityType="Self.File" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <AssociationSet Name="FK__Products__Catego__2A4B4B5E" Association="Self.FK__Products__Catego__2A4B4B5E">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Exercises__FileI__2B3F6F97" Association="Self.FK__Exercises__FileI__2B3F6F97">
+      <End Role="Files" EntitySet="Files" />
+      <End Role="Exercises" EntitySet="Exercises" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__FileId__4222D4EF" Association="PostalovTeamModel.FK__Products__FileId__4222D4EF">
+      <End Role="File" EntitySet="Files" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK__Products__FileId__4222D4EF">
+    <End Type="PostalovTeamModel.File" Role="File" Multiplicity="0..1" />
+    <End Type="PostalovTeamModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="File">
+        <PropertyRef Name="FileId" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="FileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
