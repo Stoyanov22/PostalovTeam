@@ -1,7 +1,15 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@model IEnumerable<PostalovTeam.Models.File>
+
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Добави снимка", "AddPhoto", "Gallery");
 }
 
-<h2>Index</h2>
+@foreach (var photo in Model)
+{
 
+    var base64 = Convert.ToBase64String(photo.Content);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    <img src="@imgSrc" alt="No Image" height="200" width="120">
+    <p>@photo.Description</p>
+}

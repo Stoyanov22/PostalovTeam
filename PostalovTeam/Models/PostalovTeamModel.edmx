@@ -12,17 +12,6 @@
           <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
-        <EntityType Name="Exercises">
-          <Key>
-            <PropertyRef Name="ExerciseId" />
-          </Key>
-          <Property Name="ExerciseId" Type="int" Nullable="false" />
-          <Property Name="Day" Type="int" Nullable="false" />
-          <Property Name="StarHour" Type="time" Precision="7" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="EndHour" Type="time" Precision="7" Nullable="false" />
-          <Property Name="FileId" Type="int" />
-        </EntityType>
         <EntityType Name="Files">
           <Key>
             <PropertyRef Name="FileId" />
@@ -30,6 +19,8 @@
           <Property Name="FileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Content" Type="varbinary(max)" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="isGalleryPhoto" Type="bit" />
+          <Property Name="isScedulePhoto" Type="bit" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -41,18 +32,6 @@
           <Property Name="Price" Type="float" Nullable="false" />
           <Property Name="FileId" Type="int" />
         </EntityType>
-        <Association Name="FK__Exercises__FileI__2B3F6F97">
-          <End Role="Files" Type="Self.Files" Multiplicity="0..1" />
-          <End Role="Exercises" Type="Self.Exercises" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Files">
-              <PropertyRef Name="FileId" />
-            </Principal>
-            <Dependent Role="Exercises">
-              <PropertyRef Name="FileId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Products__Catego__2A4B4B5E">
           <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -79,13 +58,8 @@
         </Association>
         <EntityContainer Name="PostalovTeamModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Exercises" EntityType="Self.Exercises" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Exercises__FileI__2B3F6F97" Association="Self.FK__Exercises__FileI__2B3F6F97">
-            <End Role="Files" EntitySet="Files" />
-            <End Role="Exercises" EntitySet="Exercises" />
-          </AssociationSet>
           <AssociationSet Name="FK__Products__Catego__2A4B4B5E" Association="Self.FK__Products__Catego__2A4B4B5E">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
@@ -94,7 +68,7 @@
             <End Role="Files" EntitySet="Files" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          </EntityContainer>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -107,27 +81,16 @@
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="Self.FK__Products__Catego__2A4B4B5E" FromRole="Categories" ToRole="Products" />
         </EntityType>
-        <EntityType Name="Exercise">
-          <Key>
-            <PropertyRef Name="ExerciseId" />
-          </Key>
-          <Property Name="ExerciseId" Type="Int32" Nullable="false" />
-          <Property Name="Day" Type="Int32" Nullable="false" />
-          <Property Name="StarHour" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EndHour" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="FileId" Type="Int32" />
-          <NavigationProperty Name="File" Relationship="Self.FK__Exercises__FileI__2B3F6F97" FromRole="Exercises" ToRole="Files" />
-        </EntityType>
         <EntityType Name="File">
           <Key>
             <PropertyRef Name="FileId" />
           </Key>
           <Property Name="FileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Content" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <NavigationProperty Name="Exercises" Relationship="Self.FK__Exercises__FileI__2B3F6F97" FromRole="Files" ToRole="Exercises" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="PostalovTeamModel.FK__Products__FileId__4222D4EF" FromRole="File" ToRole="Product" />
+          <Property Name="isGalleryPhoto" Type="Boolean" />
+          <Property Name="isScedulePhoto" Type="Boolean" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -153,30 +116,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Exercises__FileI__2B3F6F97">
-          <End Role="Files" Type="Self.File" Multiplicity="0..1" />
-          <End Role="Exercises" Type="PostalovTeamModel.Exercise" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Files">
-              <PropertyRef Name="FileId" />
-            </Principal>
-            <Dependent Role="Exercises">
-              <PropertyRef Name="FileId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="PostalovTeamEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
-          <EntitySet Name="Exercises" EntityType="PostalovTeamModel.Exercise" />
           <EntitySet Name="Files" EntityType="Self.File" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <AssociationSet Name="FK__Products__Catego__2A4B4B5E" Association="Self.FK__Products__Catego__2A4B4B5E">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Exercises__FileI__2B3F6F97" Association="Self.FK__Exercises__FileI__2B3F6F97">
-            <End Role="Files" EntitySet="Files" />
-            <End Role="Exercises" EntitySet="Exercises" />
           </AssociationSet>
           <AssociationSet Name="FK__Products__FileId__4222D4EF" Association="PostalovTeamModel.FK__Products__FileId__4222D4EF">
             <End Role="File" EntitySet="Files" />
@@ -209,21 +155,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Exercises">
-            <EntityTypeMapping TypeName="PostalovTeamModel.Exercise">
-              <MappingFragment StoreEntitySet="Exercises">
-                <ScalarProperty Name="ExerciseId" ColumnName="ExerciseId" />
-                <ScalarProperty Name="Day" ColumnName="Day" />
-                <ScalarProperty Name="StarHour" ColumnName="StarHour" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="EndHour" ColumnName="EndHour" />
-                <ScalarProperty Name="FileId" ColumnName="FileId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Files">
             <EntityTypeMapping TypeName="PostalovTeamModel.File">
               <MappingFragment StoreEntitySet="Files">
+                <ScalarProperty Name="isScedulePhoto" ColumnName="isScedulePhoto" />
+                <ScalarProperty Name="isGalleryPhoto" ColumnName="isGalleryPhoto" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="FileId" ColumnName="FileId" />
                 <ScalarProperty Name="Content" ColumnName="Content" />

@@ -17,16 +17,15 @@ namespace PostalovTeam.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public File()
         {
-            this.Exercises = new HashSet<Exercise>();
             this.Products = new HashSet<Product>();
         }
     
         public int FileId { get; set; }
         public byte[] Content { get; set; }
         public string Description { get; set; }
+        public Nullable<bool> isGalleryPhoto { get; set; }
+        public Nullable<bool> isScedulePhoto { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Exercise> Exercises { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
     }

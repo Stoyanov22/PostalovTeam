@@ -9,21 +9,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Exercises">
-      <EntityTypeMapping TypeName="PostalovTeamModel.Exercise">
-        <MappingFragment StoreEntitySet="Exercises">
-          <ScalarProperty Name="ExerciseId" ColumnName="ExerciseId" />
-          <ScalarProperty Name="Day" ColumnName="Day" />
-          <ScalarProperty Name="StarHour" ColumnName="StarHour" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="EndHour" ColumnName="EndHour" />
-          <ScalarProperty Name="FileId" ColumnName="FileId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Files">
       <EntityTypeMapping TypeName="PostalovTeamModel.File">
         <MappingFragment StoreEntitySet="Files">
+          <ScalarProperty Name="isScedulePhoto" ColumnName="isScedulePhoto" />
+          <ScalarProperty Name="isGalleryPhoto" ColumnName="isGalleryPhoto" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="FileId" ColumnName="FileId" />
           <ScalarProperty Name="Content" ColumnName="Content" />

@@ -186,9 +186,6 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>PostalovTeamModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Exercise.cs">
-      <DependentUpon>PostalovTeamModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\File.cs">
       <DependentUpon>PostalovTeamModel.tt</DependentUpon>
     </Compile>
@@ -263,8 +260,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\FatFight\Index.cshtml" />
@@ -286,6 +281,10 @@
     <Content Include="Views\Store\CreateProduct.cshtml" />
     <Content Include="Views\Store\Product.cshtml" />
     <Content Include="Views\Store\Products.cshtml" />
+    <Content Include="Views\Gallery\AddPhoto.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_AddSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

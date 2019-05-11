@@ -1,4 +1,6 @@
-﻿<h1>PostArt</h1>
+﻿@model PostalovTeam.Models.File
+
+<h1>PostArt</h1>
 
 <div class="jumbotron">
     <p>
@@ -16,3 +18,4 @@
     </p>
 </div>
 
+@Html.Partial("_AddSchedule", Model);
