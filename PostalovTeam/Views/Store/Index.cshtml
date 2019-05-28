@@ -8,7 +8,7 @@
 
 @foreach (var category in Model)
 {
-    <div>
+    <div class="jumbotron">
 
         <h3>@Html.ActionLink(category.Name, "Products", "Store", new { categoryID = category.CategoryId }, null)</h3>
         @if (User.IsInRole("Admin"))
