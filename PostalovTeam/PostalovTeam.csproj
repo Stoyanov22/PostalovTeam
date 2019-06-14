@@ -217,6 +217,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\61945063_681006699026960_3926954015379685376_n.jpg" />
+    <Content Include="Content\Images\61995275_477889276316036_5528761522962038784_n.jpg" />
+    <Content Include="Content\Images\62084584_1151237591749700_1112606020988829696_n.jpg" />
+    <Content Include="Content\Images\62156925_829830280734144_3310384281485836288_n.jpg" />
+    <Content Include="Content\Images\62179129_731883947214308_945467192571330560_n.jpg" />
+    <Content Include="Content\Images\62259717_676374022827842_6026909052770975744_n.jpg" />
+    <Content Include="Content\Images\62323154_1180980552082037_1533444547491659776_n.jpg" />
+    <Content Include="Content\Images\62337919_2133879070237035_9171023966133813248_n.jpg" />
     <Content Include="Content\Images\back1.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -286,6 +294,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_AddSchedule.cshtml" />
+    <Content Include="Views\Store\DeleteProduct.cshtml" />
+    <None Include="Views\Store\DeleteCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

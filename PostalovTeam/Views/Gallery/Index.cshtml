@@ -5,11 +5,15 @@
     @Html.ActionLink("Добави снимка", "AddPhoto", "Gallery");
 }
 
+<br />
 @foreach (var photo in Model)
 {
 
-    var base64 = Convert.ToBase64String(photo.Content);
-    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-    <img src="@imgSrc" alt="No Image" height="200" width="120">
-    <p>@photo.Description</p>
+    <div class="jumbotron col-md-4 gallery-photo">
+        @{var base64 = Convert.ToBase64String(photo.Content);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            <img class="gallery-photo" src="@imgSrc" alt="No Image">
+            <p class="gallery-desc">@photo.Description</p>
+        }
+    </div>
 }

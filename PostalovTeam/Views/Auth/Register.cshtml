@@ -4,11 +4,17 @@
 
 @Html.ValidationSummary(false)
 
-@using (Html.BeginForm())
-{
-    @Html.EditorForModel()
-    <br />
+<form action="/Auth/Register" method="post">
+    <div><label>Име</label></div>
+    <div><input class="text-box single-line textColorBlack" data-val="true" value=""></div>
+    <div class="editor-label"><label for="Email">Email</label></div>
+    <div class="editor-field"><input class="text-box single-line textColorBlack" data-val="true" data-val-required="The Email field is required." id="Email" name="Email" type="email" value=""> <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span></div>
+    <div><label>Телефон</label></div>
+    <div><input class="text-box single-line textColorBlack" data-val="true" type="number" value=""></div>
+    <div class="editor-label"><label for="Password">Парола</label></div>
+    <div class="editor-field"><input class="text-box single-line password textColorBlack" data-val="true" data-val-required="The Password field is required." id="Password" name="Password" type="password" value=""> <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span></div>
+    <br>
     <p>
         <button type="submit">Register</button>
     </p>
-}
+</form>

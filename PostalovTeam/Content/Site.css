@@ -1,8 +1,8 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-image : url("Images/back1.jpg");
-    color : azure;
+    background-image: url("Images/back1.jpg");
+    color: azure;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -25,15 +25,44 @@ textarea {
     max-width: 280px;
 }
 
-.jumbotron p{
+.jumbotron p {
     color: #333;
 }
 
-.jumbotron h1{
+.jumbotron h1 {
     color: #2e6859;
 }
 
-.schedulePhoto{
-    width:80%;
-    text-align : center;
+.schedulePhoto {
+    width: 80%;
+    text-align: center;
+}
+
+.textColorBlack {
+    color: black;
+}
+
+.postArtBackground {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('images/62179129_731883947214308_945467192571330560_n.jpg');
+}
+
+.kangooJumpBackground {
+    background-image: url('Images/62323154_1180980552082037_1533444547491659776_n.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.gallery-photo {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+    .gallery-photo:hover > .gallery-desc{
+        display: block;
+    }
+
+.gallery-desc {
+    display: none;
 }
