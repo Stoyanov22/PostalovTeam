@@ -1,16 +1,36 @@
-﻿@model IEnumerable<PostalovTeam.Models.Product>
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<PostalovTeam.Models.Product>
 
 <h2>Продукти</h2>
 
 @foreach (var product in Model)
 {
-    <div>
-        <h3>@Html.ActionLink(product.Name, "Product", "Store", new { productId = product.ProductId }, null)</h3>
-        @if (User.IsInRole("Admin"))
-        {
-            @Html.ActionLink("Промени", "EditProduct", "Store", new { productId = product.ProductId }, null);
-            @Ajax.ActionLink("Изтрий", "DeleteProduct", "Store", new { productId = product.ProductId }, new AjaxOptions { HttpMethod = "POST" })
+<div class="col-md-3 jumbotron">
+    <h3>@Html.ActionLink(product.Name, "Product", "Store", new { productId = product.ProductId }, null)</h3>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Промени", "EditProduct", "Store", new { productId = product.ProductId }, null);
+        @Ajax.ActionLink("Изтрий", "DeleteProduct", "Store", new { productId = product.ProductId }, null)
+    }
 
+    @if (product.File != null)
+    {
+        var base64 = Convert.ToBase64String(product.File.Content);
+        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+        <img src="@imgSrc" alt="No Image" height="200" width="200">
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (product.UserProducts.FirstOrDefault(x => (x.UserId == User.Identity.GetUserId() && x.ProductId == product.ProductId)) == null)
+        {
+            @Html.ActionLink("Добави в количка", "ShoppingCart", "Store", new { actionId = 1, productId = product.ProductId }, null);
         }
-    </div><br />
+        else
+        {
+            @Html.ActionLink("Премахни от количка", "ShoppingCart", "Store", new { actionId = 2, productId = product.ProductId }, null);
+        }
+    }
+</div>
 }
+<div class="col-md-12"></div>

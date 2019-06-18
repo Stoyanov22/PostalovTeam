@@ -27,7 +27,15 @@
     <Property Name="Price" Type="float" Nullable="false" />
     <Property Name="FileId" Type="int" />
   </EntityType>
-  <Association Name="FK__Products__Catego__2A4B4B5E">
+  <EntityType Name="UserProducts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Products__Catego__5AEE82B9">
     <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
     <End Role="Products" Type="Self.Products" Multiplicity="*" />
     <ReferentialConstraint>
@@ -39,7 +47,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Products__FileId__4222D4EF">
+  <Association Name="FK__Products__FileId__5BE2A6F2">
     <End Role="Files" Type="Self.Files" Multiplicity="0..1" />
     <End Role="Products" Type="Self.Products" Multiplicity="*" />
     <ReferentialConstraint>
@@ -51,17 +59,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__UserProdu__Produ__71D1E811">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="UserProducts" Type="Self.UserProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="UserProducts">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="PostalovTeamModelStoreContainer">
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Products__Catego__2A4B4B5E" Association="Self.FK__Products__Catego__2A4B4B5E">
+    <EntitySet Name="UserProducts" EntityType="Self.UserProducts" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Products__Catego__5AEE82B9" Association="Self.FK__Products__Catego__5AEE82B9">
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />
     </AssociationSet>
-    <AssociationSet Name="FK__Products__FileId__4222D4EF" Association="Self.FK__Products__FileId__4222D4EF">
+    <AssociationSet Name="FK__Products__FileId__5BE2A6F2" Association="Self.FK__Products__FileId__5BE2A6F2">
       <End Role="Files" EntitySet="Files" />
       <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserProdu__Produ__71D1E811" Association="Self.FK__UserProdu__Produ__71D1E811">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="UserProducts" EntitySet="UserProducts" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

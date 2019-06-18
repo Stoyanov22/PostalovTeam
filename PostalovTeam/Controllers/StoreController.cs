@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PostalovTeam.Models;
+using File = PostalovTeam.Models.File;
 
 namespace PostalovTeam.Controllers
 {
@@ -13,6 +17,7 @@ namespace PostalovTeam.Controllers
         PostalovTeamEntities pte = new PostalovTeamEntities();
 
         // GET: Store
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var categories = pte.Categories.ToList();
@@ -63,23 +68,34 @@ namespace PostalovTeam.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public ActionResult DeleteCategory(int categoryId)
+        public ActionResult DeleteCategory(int? categoryId)
         {
-            var category = pte.Categories.SingleOrDefault(x => x.CategoryId == categoryId);
+            Category category = pte.Categories.Find(categoryId);
+            return View(category);
+        }
+
+        // POST: Test/Delete/5
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult DeleteCategoryConfirmed(int id)
+        {
+            Category category = pte.Categories.Find(id);
             pte.Categories.Remove(category);
+            pte.SaveChanges();
             return RedirectToAction("Index", "Store");
         }
 
+        [AllowAnonymous]
         public ActionResult Products(int categoryId)
         {
-            var products = pte.Products.Where(p => p.CategoryId == categoryId).ToList();
+            var products = pte.Products.Where(p => p.CategoryId == categoryId).Include("File").Include("UserProducts").ToList();
             return View(products);
         }
 
+        [AllowAnonymous]
         public ActionResult Product(int productId)
         {
-            var product = pte.Products.SingleOrDefault(x => x.ProductId == productId);
+            var product = pte.Products.Include("File").SingleOrDefault(x => x.ProductId == productId);
             return View(product);
         }
 
@@ -100,13 +116,26 @@ namespace PostalovTeam.Controllers
                 {
                     Name = newProduct.Name,
                     Price = newProduct.Price,
-                    CategoryId = newProduct.CategoryId
+                    CategoryId = newProduct.CategoryId,
+
                 };
                 pte.Products.Add(product);
+
+                byte[] fileData = null;
+                using (var binaryReader = new BinaryReader(Request.Files["photo"].InputStream))
+                {
+                    fileData = binaryReader.ReadBytes(Request.Files["photo"].ContentLength);
+                }
+                var photo = new PostalovTeam.Models.File
+                {
+                    Content = fileData,
+                };
+                File file = pte.Files.Add(photo);
+                product.File = file;
                 pte.SaveChanges();
             }
-
             return RedirectToAction("Index", "Store");
+
         }
 
         [Authorize(Roles = "Admin")]
@@ -132,13 +161,41 @@ namespace PostalovTeam.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public ActionResult DeleteProduct(int productId)
+        public ActionResult DeleteProduct(int? productId)
         {
-            var product = pte.Products.SingleOrDefault(x => x.ProductId == productId);
+            Product product = pte.Products.Find(productId);
+            return View(product);
+        }
+
+        // POST: Test/Delete/5
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult DeleteProductConfirmed(int id)
+        {
+            Product product = pte.Products.Find(id);
             pte.Products.Remove(product);
+            pte.SaveChanges();
             return RedirectToAction("Index", "Store");
         }
 
+        public ActionResult ShoppingCart(int actionId, int productId = 0)
+        {
+            var userId = User.Identity.GetUserId();
+
+            if (actionId == 1 && productId != 0)
+            {
+                pte.UserProducts.Add(new UserProduct { ProductId = productId, UserId = userId });
+                pte.SaveChanges();
+            }
+            else if(actionId == 2 && productId != 0)
+            {
+                UserProduct up = pte.UserProducts.SingleOrDefault(x => x.UserId == userId && x.ProductId == productId);
+                pte.UserProducts.Remove(up);
+                pte.SaveChanges();
+            }
+
+            List<Product> products = pte.Products.Include("File").Where(x => x.UserProducts.Any(y => y.UserId == userId)).ToList();
+            return View(products);
+        }
     }
 }

@@ -32,7 +32,15 @@
           <Property Name="Price" Type="float" Nullable="false" />
           <Property Name="FileId" Type="int" />
         </EntityType>
-        <Association Name="FK__Products__Catego__2A4B4B5E">
+        <EntityType Name="UserProducts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Products__Catego__5AEE82B9">
           <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -44,7 +52,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__FileId__4222D4EF">
+        <Association Name="FK__Products__FileId__5BE2A6F2">
           <End Role="Files" Type="Self.Files" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -56,17 +64,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__UserProdu__Produ__71D1E811">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="UserProducts" Type="Self.UserProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="UserProducts">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="PostalovTeamModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Products__Catego__2A4B4B5E" Association="Self.FK__Products__Catego__2A4B4B5E">
+          <EntitySet Name="UserProducts" EntityType="Self.UserProducts" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Products__Catego__5AEE82B9" Association="Self.FK__Products__Catego__5AEE82B9">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__FileId__4222D4EF" Association="Self.FK__Products__FileId__4222D4EF">
+          <AssociationSet Name="FK__Products__FileId__5BE2A6F2" Association="Self.FK__Products__FileId__5BE2A6F2">
             <End Role="Files" EntitySet="Files" />
             <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserProdu__Produ__71D1E811" Association="Self.FK__UserProdu__Produ__71D1E811">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="UserProducts" EntitySet="UserProducts" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -103,6 +128,7 @@
           <NavigationProperty Name="Category" Relationship="Self.FK__Products__Catego__2A4B4B5E" FromRole="Products" ToRole="Categories" />
           <Property Name="FileId" Type="Int32" />
           <NavigationProperty Name="File" Relationship="PostalovTeamModel.FK__Products__FileId__4222D4EF" FromRole="Product" ToRole="File" />
+          <NavigationProperty Name="UserProducts" Relationship="PostalovTeamModel.FK__UserProdu__Produ__71D1E811" FromRole="Product" ToRole="UserProduct" />
         </EntityType>
         <Association Name="FK__Products__Catego__2A4B4B5E">
           <End Role="Categories" Type="Self.Category" Multiplicity="1" />
@@ -128,6 +154,11 @@
             <End Role="File" EntitySet="Files" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <EntitySet Name="UserProducts" EntityType="PostalovTeamModel.UserProduct" />
+          <AssociationSet Name="FK__UserProdu__Produ__71D1E811" Association="PostalovTeamModel.FK__UserProdu__Produ__71D1E811">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="UserProduct" EntitySet="UserProducts" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__Products__FileId__4222D4EF">
           <End Type="PostalovTeamModel.File" Role="File" Multiplicity="0..1" />
@@ -138,6 +169,27 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="PostalovTeamModel.FK__UserProdu__Produ__71D1E811" FromRole="UserProduct" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__UserProdu__Produ__71D1E811">
+          <End Type="PostalovTeamModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="PostalovTeamModel.UserProduct" Role="UserProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="UserProduct">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -174,6 +226,15 @@
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProducts">
+            <EntityTypeMapping TypeName="PostalovTeamModel.UserProduct">
+              <MappingFragment StoreEntitySet="UserProducts">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

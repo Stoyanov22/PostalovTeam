@@ -14,7 +14,7 @@
         @if (User.IsInRole("Admin"))
         {
             @Html.ActionLink("Промени", "EditCategory", "Store", new { categoryId = category.CategoryId }, null);
-            @Ajax.ActionLink("Изтрий", "DeleteCategory", "Store", new { categoryId = category.CategoryId }, new AjaxOptions { HttpMethod = "POST" })
+            @Ajax.ActionLink("Изтрий", "DeleteCategory", "Store", new { categoryId = category.CategoryId }, null)
 
         }
     </div><br />

@@ -1,0 +1,10 @@
+﻿@model PostalovTeam.Models.Category
+
+<h3>Сигурни ли сте, че искате да изтриете ?</h3>
+<div>
+    <form action="/Store/DeleteCategoryConfirmed/@Model.CategoryId" method="post">
+        <input name="__RequestVerificationToken" type="hidden" value="Qy7a9nrw8I9FuxieDF6XRGK2hF1hqfTNp5wufMgtenSKZBmY-6pwYAPBGm1WArAJgDzrVmq6M3Fx5yNXBXg9XfBgaAo7iwPgefp2k8YttAEukFpXtyIvuEh3LLL2RAKxNSFXO8lYw0UBWIHzleLG4Q2">        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default">
+        </div>
+    </form>
+</div>

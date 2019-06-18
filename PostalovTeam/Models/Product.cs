@@ -14,6 +14,12 @@ namespace PostalovTeam.Models
     
     public partial class Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product()
+        {
+            this.UserProducts = new HashSet<UserProduct>();
+        }
+    
         public int ProductId { get; set; }
         public int CategoryId { get; set; }
         public string Name { get; set; }
@@ -22,5 +28,7 @@ namespace PostalovTeam.Models
     
         public virtual Category Category { get; set; }
         public virtual File File { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserProduct> UserProducts { get; set; }
     }
 }

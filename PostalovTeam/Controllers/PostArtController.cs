@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,6 +18,7 @@ namespace PostalovTeam.Controllers
         {
             Models.File schedulePhoto = pte.Files.SingleOrDefault(x => x.isScedulePhoto == true);
             return View(schedulePhoto);
+            //return View();
         }
 
         [Authorize(Roles = "Admin")]
@@ -43,6 +45,7 @@ namespace PostalovTeam.Controllers
             pte.Files.Remove(oldPhoto);
             pte.SaveChanges();
 
+            SendEmail();
             return RedirectToAction("Index", "PostArt");
         }
 
@@ -74,6 +77,29 @@ namespace PostalovTeam.Controllers
         public ActionResult Handmade()
         {
             return View();
+        }
+
+        public void SendEmail()
+        {
+            var dbContext = new PostalovTeamDbContext();
+            List<String> userEmails = dbContext.Users.Select(x => x.UserName).ToList();
+            foreach(String email in userEmails)
+            {
+                SmtpClient smtpClient = new SmtpClient("neko_gig@abv.bg", 25);
+
+                smtpClient.Credentials = new System.Net.NetworkCredential("neko_gig@abv.bg", "password");
+                smtpClient.UseDefaultCredentials = true;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.EnableSsl = true;
+                MailMessage mail = new MailMessage();
+
+                //Setting From , To and CC
+                mail.From = new MailAddress("neko_gig@abv.bg", "Postalov Team");
+                mail.To.Add(new MailAddress(email));
+                mail.Body = "Има промяна в графика. Моля проверете!";
+
+                //smtpClient.Send(mail);
+            }
         }
     }
 }

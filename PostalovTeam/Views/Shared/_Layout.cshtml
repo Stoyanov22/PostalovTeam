@@ -30,6 +30,8 @@
                     <li>@Html.ActionLink("Галерия", "Index", "Gallery")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <li>@Html.ActionLink("Количка", "ShoppingCart", "Store" , new { actionId = 0 }, null)</li>
+                        <li id="openDietForm"><a href="#">Хранителен Режим</a></li>
                         <li>@Html.ActionLink("Изход", "LogOut", "Auth")</li>
                     }
                     else
@@ -42,6 +44,42 @@
         </div>
     </div>
     <div class="container body-content">
+        <div class="form-popup" id="myForm">
+            <form action="/action_page.php" class="form-container">
+                <h1>Хранителен Режим</h1>
+
+                <b>Изберете пол</b><br />
+                <input type="radio" name="gender" value="Мъж" />Мъж
+                <input type="radio" name="gender" value="Жена" />Жена<br />
+
+                <b>Как определяте своята физическа активност? </b><br />
+                <input type="radio" name="activity" value="Почти никаква" />Почти никаква
+                <input type="radio" name="activity" value="Тренирам понякога" />Тренирам понякога
+                <input type="radio" name="activity" value="Тренирам всеки ден" />Тренирам всеки ден<br />
+
+                <b>Кое от изброение неща е вярно за вас? </b><br />
+                <input type="radio" name="prob" value="Не мога без сладко" />Не мога без сладко
+                <input type="radio" name="prob" value="Консумирам много сол" />Консумирам много сол
+                <input type="radio" name="prob" value="Обичам газирани напитки" />Обичам газирани напитки<br />
+
+                <b>Колко пъти се храните на ден </b><br />
+                <input type="radio" name="eat" value="1 път" />1 път
+                <input type="radio" name="eat" value="3 пъти" />3 пъти
+                <input type="radio" name="eat" value="Различно" />Различно<br />
+
+                <b>Има ли храни които не консумирате?</b><br />
+                <input type="text" placeholder="Избройте ги тук" /><br />
+
+                <b>Мерки :</b>
+                Години : <input type="number" /><br />
+                Височина : <input type="number" /><br />
+                Килограми : <input type="number" /><br />
+                Желани Килограми : <input type="number" /><br />
+
+                <button type="button" id="submitDietForm" class="btn">Състави Режим</button>
+                <button type="button" id="closeDietForm" class="btn cancel">Затвори</button>
+            </form>
+        </div>
         @RenderBody()
         <hr />
         <footer>
@@ -51,6 +89,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/dietForm.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

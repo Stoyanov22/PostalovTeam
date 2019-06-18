@@ -10,6 +10,8 @@
         <EntityTypeShape EntityType="PostalovTeamModel.Product" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="PostalovTeamModel.FK__Products__Catego__2A4B4B5E" ManuallyRouted="false" />
         <AssociationConnector Association="PostalovTeamModel.FK__Products__FileId__4222D4EF" />
+        <EntityTypeShape EntityType="PostalovTeamModel.UserProduct" Width="1.5" PointX="3.375" PointY="4.75" />
+        <AssociationConnector Association="PostalovTeamModel.FK__UserProdu__Produ__71D1E811" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
